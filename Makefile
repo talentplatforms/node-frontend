@@ -26,7 +26,7 @@ release:
 ################################################################################
 # you have to know what you're doing if your using this ;)
 
-NODE_VERSION=13.12.0
+NODE_VERSION=14.4.0
 ALPINE_VERSION=3.11
 REGISTRY=talentplatforms/node-frontend
 VCS_URL=https://github.com/talentplatforms/node-frontend
