@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/talentplatforms/node-frontend/compare/v1.1.0...v1.2.0) (2020-06-17)
+
+
+### Features
+
+* adds debian-slim ([17f1905](https://github.com/talentplatforms/node-frontend/commit/17f1905063d18ad595b98d9b85ce54b8a2c42ba4))
+
 ## 1.1.0 (2020-06-16)
 
 
