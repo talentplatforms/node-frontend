@@ -5,6 +5,8 @@
 This is an opinionated image for node-based frontend focused images.
 It ships with a couple of tools and libraries found in the next section.
 
+This now comes in two flavours: alpine and debian-slim.
+
 ## Tools and Libraries
 
 * bash
@@ -22,7 +24,7 @@ Per convention the working directory is set to **/app**
 The image comes with a Makefile that has everything abstracted away for you to easily customize it.
 
 ```bash
-$ make make NODE_VERSION=13.10.1 ALPINE_VERSION=3.11 build push
+$ make make NODE_VERSION=13.10.1 ALPINE_VERSION=3.11 DEBIAN_VERSION_NAME=buster build push
 ```
 
 ## Available VARS
@@ -30,6 +32,7 @@ $ make make NODE_VERSION=13.10.1 ALPINE_VERSION=3.11 build push
 ```bash
 NODE_VERSION=13.12.0
 ALPINE_VERSION=3.11
+DEBIAN_VERSION_NAME=buster
 REGISTRY=${REGISTRY:-ORGANIZATION/node-frontend}
 VCS_URL=${VCS_URL:-https://THE_REPO_URL}
 ```

@@ -28,6 +28,7 @@ release:
 
 NODE_VERSION=14.4.0
 ALPINE_VERSION=3.11
+DEBIAN_VERSION_NAME=buster
 REGISTRY=talentplatforms/node-frontend
 VCS_URL=https://github.com/talentplatforms/node-frontend
 
@@ -35,10 +36,26 @@ VCS_URL=https://github.com/talentplatforms/node-frontend
 _BUILD_DATE=$(shell echo $$(date -u +'%Y-%m-%dT%H:%M:%SZ'))
 _VCS_REF=$(shell echo $$(git rev-parse --verify HEAD))
 _IMAGE_LATEST=${REGISTRY}:latest
-_IMAGE_TAGGED=${REGISTRY}:${NODE_VERSION}-alpine${ALPINE_VERSION}
+_ALPINE_IMAGE_TAGGED=${REGISTRY}:${NODE_VERSION}-alpine${ALPINE_VERSION}
+_DEBIAN_IMAGE_TAGGED=${REGISTRY}:${NODE_VERSION}-${DEBIAN_VERSION_NAME}-slim
 
 # builds the image and tags it with the latest tag and the more specific tag defined in _IMAGE_TAGGED
-build:
+build: build_alpine build_debian
+
+build_debian:
+	docker build \
+	--rm \
+	--build-arg NODE_VERSION=${NODE_VERSION} \
+	--build-arg DEBIAN_VERSION_NAME=${DEBIAN_VERSION_NAME} \
+	--build-arg BUILD_DATE=${_BUILD_DATE} \
+	--build-arg VCS_URL=${VCS_URL} \
+	--build-arg VCS_REF=${_VCS_REF} \
+	--build-arg BUILDKIT_INLINE_CACHE=1 \
+	-t ${_DEBIAN_IMAGE_TAGGED} \
+	-f ./debian/Dockerfile \
+	.
+
+build_alpine:
 	docker build \
 	--rm \
 	--build-arg NODE_VERSION=${NODE_VERSION} \
@@ -48,13 +65,18 @@ build:
 	--build-arg VCS_REF=${_VCS_REF} \
 	--build-arg BUILDKIT_INLINE_CACHE=1 \
 	-t ${_IMAGE_LATEST} \
-	-t ${_IMAGE_TAGGED} \
+	-t ${_ALPINE_IMAGE_TAGGED} \
+	-f ./alpine/Dockerfile \
 	.
 
 # pushes the tagged image to the registry
 # if no variables are set, it uses the defaults
-push:
-	docker push ${_IMAGE_LATEST}
-	docker push ${_IMAGE_TAGGED}
+push: push_alpine push_debian
 
+push_debian:
+	docker push ${_DEBIAN_IMAGE_TAGGED}
+
+push_alpine:
+	docker push ${_IMAGE_LATEST}
+	docker push ${_ALPINE_IMAGE_TAGGED}
 # make NODE_VERSION=13.10.1 build push

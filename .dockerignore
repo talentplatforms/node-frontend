@@ -4,7 +4,9 @@ node_modules
 # Files
 .gitlab-ci.yml
 .versionrc
+CHANGELOG.md
 commitlint.config.js
+LICENSE
 Makefile
 package*.json
-readme.md
+README.md
