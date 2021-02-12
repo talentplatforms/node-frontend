@@ -2,7 +2,7 @@
 
 set -ex
 
-NODE_VERSIONS=(14.13.1 12.19.0)
+NODE_VERSIONS=(12.19.0 14.13.1 14.15.5)
 
 for version in "${NODE_VERSIONS[@]}"
 do
